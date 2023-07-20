@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { generate, count } from "random-words";
+import Results from "./Results";
+import Timer from "./Timer";
 // import { nanoid } from "nanoid";
 
 export default function MainV2({
   userInput,
   setUserInput,
-  startTimer,
-  isActive,
-  setIsActive,
   timeLeft,
+  setTimeLeft,
 }) {
   const [words, setWords] = useState(
-    generate(Math.trunc(Math.random() * (60 - 20) + 20)).join(` `)
+    generate(Math.trunc(Math.random() * (60 - 30) + 30)).join(` `)
   );
-
+  const [isActive, setIsActive] = useState(true);
   const [wrongCount, setWrongCount] = useState(0);
-
+  const [start, setStart] = useState(false);
   const wordCount = words.split(` `).length;
 
   const letterEls = userInput.split(``).map((letter, i, arr) => {
@@ -32,13 +32,17 @@ export default function MainV2({
     return i !== 0 ? el !== `` : el;
   }).length;
 
-  // lettercount / wrongCount
+  //wrongCount / letters
   const accuracy = userInput
-    ? 100 - (wrongCount / userInput.split(``).length) * 100
+    ? Math.trunc(100 - (wrongCount / userInput.split(``).length) * 100)
     : 100;
-  console.log(accuracy);
-  //words / time
-  const wpm = 0;
+
+  //letters / time
+  const wpm = Math.floor(userInput.split(``).length / 5 / 0.5);
+
+  let graphData;
+
+  console.log(isActive);
 
   // const test = letterEls.map((letter) =>
   //   letter.props.letter === ` ` ? ` ` : letter
@@ -57,10 +61,11 @@ export default function MainV2({
   // }, [userInput, words]);
 
   function handleUserInput(e) {
-    userInput === `` && startTimer();
+    userInput === `` && setStart(true);
     e.target.value.split(``).slice(-1)[0] !== words[userInput.length] &&
       setWrongCount((prevCount) => prevCount + 1);
 
+    //Guard clause for multiple spaces which would throw off the word count
     if (e.target.value.slice(-1) === ` ` && userInput.slice(-1) === ` `) return;
     else setUserInput(e.target.value);
   }
@@ -70,12 +75,14 @@ export default function MainV2({
     setUserInput("");
     setWrongCount(0);
     setIsActive(true);
+    setTimeLeft(30);
+    setStart(false);
   }
 
   return (
     <main className="main">
       <div className="main-inner">
-        {isActive && (
+        {isActive ? (
           <div className="text-box">
             <div className="words">
               <span className="words-temp">{words}</span>
@@ -83,15 +90,22 @@ export default function MainV2({
               <div className="word-count">
                 {typedWordCount} / {wordCount}
               </div>
-              <span className="timer">{timeLeft}</span>
+              <Timer
+                setIsActive={setIsActive}
+                start={start}
+                setStart={setStart}
+                timeLeft={timeLeft}
+                setTimeLeft={setTimeLeft}
+              />
             </div>
             <textarea
-              type="text"
               value={userInput}
               className="words-input"
               onChange={handleUserInput}
             ></textarea>
           </div>
+        ) : (
+          <Results wpm={wpm} accuracy={accuracy} />
         )}
 
         <button className="reset-btn" onClick={handleReset}>

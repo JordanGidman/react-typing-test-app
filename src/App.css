@@ -30,8 +30,25 @@ html {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 2rem;
+  padding: 2rem 25% 2rem 25%;
   font-size: 2.6rem;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.git-link {
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.git-link:hover {
+  transform: scale(1.1);
 }
 
 .main {
@@ -44,6 +61,8 @@ html {
   height: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: 2rem;
   gap: 6rem;
   position: relative;
@@ -55,8 +74,8 @@ html {
 
 .word-count {
   position: absolute;
-  bottom: 1%;
-  left: 1%;
+  bottom: 4%;
+  left: 2%;
 }
 
 .reset-btn {
@@ -105,6 +124,11 @@ html {
 .words-temp,
 .input-display {
   position: absolute;
+  padding-right: 3rem;
+  user-select: none;
+}
+
+.input-display {
 }
 
 .words,
@@ -113,15 +137,24 @@ html {
   top: 50%;
   left: 50%;
   padding: 2rem;
+  overflow: hidden;
 
   transform: translate(-50%, -50%);
   width: 80%;
   height: 60%;
+  user-select: none;
+
+  /* For older browsers */
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 
 .words-input {
-  color: rgb(255, 255, 255, 0);
-  caret-color: (0, 0, 0, 1);
+  color: transparent;
+  padding: 2rem;
+  /* padding-right: 1rem; */
+  caret-color: #fff;
   resize: none;
   overflow: hidden;
 }
@@ -136,6 +169,24 @@ html {
 
 .timer {
   position: absolute;
-  bottom: 2%;
+  bottom: 4%;
   right: 2%;
+}
+
+.results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12.6rem;
+}
+
+.results h1 {
+  font-size: 4.4rem;
+}
+
+.graph-box {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  font-size: 2rem;
 }

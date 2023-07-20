@@ -3,8 +3,13 @@ import React from "react";
 export default function Header() {
   return (
     <div className="header">
-      <div>logo</div>
-      <div>Info</div>
+      <div className="logo">
+        <span>JG Speed</span>
+        <span>Typing</span>
+      </div>
+      <a href="#" className="git-link">
+        GitHub
+      </a>
     </div>
   );
 }

@@ -1,11 +1,14 @@
 import React from "react";
 import { Line, LineChart } from "recharts";
 
-export default function Results() {
+export default function Results({ wpm, accuracy }) {
   return (
     <div className="results">
-      <h1>Your Results Are</h1>
-      <div className="graph-box"></div>
+      <h1>Results</h1>
+      <div className="graph-box">
+        <span>WPM: {wpm}</span>
+        <span>Accuracy: {accuracy}%</span>
+      </div>
     </div>
   );
 }
