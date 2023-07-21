@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 
 export default function Timer({
   setIsActive,
@@ -7,23 +7,29 @@ export default function Timer({
   timeLeft,
   setTimeLeft,
 }) {
-  //   const [timeLeft, setTimeLeft] = useState(30);
-  //   const [start, setStart] = useState(false);
-
   useEffect(() => {
+    function endTimer({ interval }) {
+      clearInterval(interval);
+      setIsActive(false);
+
+      setStart(false);
+    }
+
     if (start === false) return;
     const interval = setInterval(() => {
       setTimeLeft((timeLeft) => timeLeft - 1);
     }, 1000);
     console.log(`timer started`);
+
     const timer = setTimeout(() => {
-      console.log(timer);
-      clearInterval(interval);
-      setIsActive(false);
-      clearTimeout(timer);
-      setStart(false);
+      endTimer(interval);
     }, 30000);
-  }, [start]);
+
+    return () => {
+      clearTimeout(timer);
+      clearInterval(interval);
+    };
+  }, [start, setTimeLeft, setIsActive, setStart]);
 
   return <span className="timer">{timeLeft}</span>;
 }

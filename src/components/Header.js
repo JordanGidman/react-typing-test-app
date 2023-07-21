@@ -7,7 +7,10 @@ export default function Header() {
         <span>JG Speed</span>
         <span>Typing</span>
       </div>
-      <a href="#" className="git-link">
+      <a
+        href="https://github.com/JordanGidman/react-typing-test-app"
+        className="git-link"
+      >
         GitHub
       </a>
     </div>

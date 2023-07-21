@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { generate, count } from "random-words";
+import React, { useState } from "react";
+import { generate } from "random-words";
 import Results from "./Results";
 import Timer from "./Timer";
 // import { nanoid } from "nanoid";
@@ -16,6 +16,7 @@ export default function MainV2({
   const [isActive, setIsActive] = useState(true);
   const [wrongCount, setWrongCount] = useState(0);
   const [start, setStart] = useState(false);
+
   const wordCount = words.split(` `).length;
 
   const letterEls = userInput.split(``).map((letter, i, arr) => {
@@ -39,10 +40,6 @@ export default function MainV2({
 
   //letters / time
   const wpm = Math.floor(userInput.split(``).length / 5 / 0.5);
-
-  let graphData;
-
-  console.log(isActive);
 
   // const test = letterEls.map((letter) =>
   //   letter.props.letter === ` ` ? ` ` : letter
@@ -99,6 +96,7 @@ export default function MainV2({
               />
             </div>
             <textarea
+              aria-label="box for typing"
               value={userInput}
               className="words-input"
               onChange={handleUserInput}
@@ -108,7 +106,7 @@ export default function MainV2({
           <Results wpm={wpm} accuracy={accuracy} />
         )}
 
-        <button className="reset-btn" onClick={handleReset}>
+        <button className="reset-btn" onClick={handleReset} aria-label="reset">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
